@@ -11,7 +11,6 @@ int main(void)
     int height;
 
     //Prompt user for a positive number
-
     do
     {
         height = get_int("Give a Positive Number less than 23: ");
@@ -19,27 +18,20 @@ int main(void)
     while (height < 0 || height > 23);
 
 //pyramid
-
+    
   for (int i = 0; i < height; i++)
-
   {
-
+      
     //print number of spaces on the left
-
     char nums = height - 1;
-
     for (int j = i; j < nums; j++)
-
     {
         printf(" ");
     }
-
+      
     //print number of hashes on the left
-
     char numh1 = i + 1;
-
     for (int j = 0; j < numh1; j++)
-
     {
         printf("#");
     }
@@ -49,9 +41,7 @@ int main(void)
 
     //print the right pyramid
     char numh2 = i + 1;
-
     for (int j = 0; j < numh2; j++)
-
     {
         printf("#");
     }
