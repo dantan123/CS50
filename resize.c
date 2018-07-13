@@ -1,4 +1,5 @@
 // Copies a BMP file
+// Received help from Stack Exchange and GitHub
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,7 +65,7 @@ int main(int argc, char *argv[])
         return 5;
     }
 
-    //create outfile's BITMAPINFOHEADER and BITFILEHEADER
+    //Make outfile's BITMAPINFOHEADER and BITFILEHEADER
     BITMAPFILEHEADER outbf = bf;
     BITMAPINFOHEADER outbi = bi;
 
@@ -112,7 +113,7 @@ int main(int argc, char *argv[])
                 fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
                 // iterate each pixel n times
-                for (int l=0; l < n; l++)
+                for (int l = 0; l < n; l++)
                 {
                     // write RGBTRIPLE to outfile
                     fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
@@ -121,7 +122,7 @@ int main(int argc, char *argv[])
             }
 
             // then add it back to outfile
-            for (int y = 0; y < padding; y++)
+            for (int m = 0; m < padding; m++)
             {
                 fputc(0x00, outptr);
             }
