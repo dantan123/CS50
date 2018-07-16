@@ -1,1 +1,3 @@
-# The repository includes CS and programming exercises in the C language. 
+# This repository is based on the problems sets of the popular Harvard CS50 course on Edx. 
+/
+
