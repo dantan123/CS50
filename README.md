@@ -1,1 +1,1 @@
-This repository is based on the practice problems from Harvard`s CS50 course on Edx. Files are located in the branches. 
+This repository is based on the C practice problems from Edx's popular CS50. My goal was trying to learn the C code. Files are committed to the branches. 
