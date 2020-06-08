@@ -1,1 +1,1 @@
-This repository is based on Edx's popular CS50. Files are in the branches.
+This repository is based on Harvard's CS50 - AI. Files are in the branches.
