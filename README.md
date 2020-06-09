@@ -1,1 +1,1 @@
-This repository is based on Harvard's CS50 - AI.
+This repository is based on the ongoing Harvard's CS50 - AI. 
