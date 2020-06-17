@@ -19,11 +19,8 @@ def main():
         sys.exit("Usage: python traffic.py data_directory [model.h5]")
 
     # Get image arrays and labels for all image files
-    # images, labels = load_data(sys.argv[1])
+    images, labels = load_data(sys.argv[1])
 
-    load_data(sys.argv[1])
-
-    """
     # Split data into training and testing sets
     labels = tf.keras.utils.to_categorical(labels)
     x_train, x_test, y_train, y_test = train_test_split(
@@ -44,8 +41,7 @@ def main():
         filename = sys.argv[2]
         model.save(filename)
         print(f"Model saved to {filename}.")
-    
-    """
+        
 
 def load_data(data_dir):
     """
