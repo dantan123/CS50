@@ -74,7 +74,6 @@ def load_data(data_dir):
             new_path = os.path.join(new_path, file)
             print(new_path)
 
-    '''
         # load a color image in grayscale
         img = cv2.imread(new_path, 0)
 
@@ -91,8 +90,6 @@ def load_data(data_dir):
     return img_list
 
     raise NotImplementedError
-
-    '''
 
 def get_model():
     """
