@@ -3,6 +3,7 @@ import numpy as np
 import os
 import sys
 import tensorflow as tf
+from tensorflow import keras
 import re
 
 from sklearn.model_selection import train_test_split
@@ -18,13 +19,9 @@ def main():
     # Check command-line arguments
     if len(sys.argv) not in [2, 3]:
         sys.exit("Usage: python traffic.py data_directory [model.h5]")
-
-    # test_load()
-
-    # Get image arrays and labels for all image files
-    # images, labels = load_data(sys.argv[1])
-    # argv[1] is the directory name
-    load_data(sys.argv[1])
+    
+    # Get image arrays and labels for all image files (massage the data)
+    images, labels = load_data(sys.argv[1])
 
 '''
     # Split data into training and testing sets
@@ -49,7 +46,6 @@ def main():
         print(f"Model saved to {filename}.")
 
 '''
-
 def load_data(data_dir):
     """
     Load image data from directory `data_dir`.
@@ -67,6 +63,7 @@ def load_data(data_dir):
 
     path = os.walk(data_dir)
     img_list = []
+    label_list = []
 
     for root, dirs, files in path:
         for fname in files:
@@ -74,7 +71,7 @@ def load_data(data_dir):
                 new_path = os.path.join(root, fname)
             else:
                 continue
-            print(new_path)
+            # print(new_path)
             num = root.replace('gtsrb-small/', '')
 
             # load a color image and set flag to none
@@ -83,13 +80,13 @@ def load_data(data_dir):
             # resize image
             img_output = cv2.resize(new_img, (IMG_WIDTH, IMG_HEIGHT))
 
-            # convert to numpy arrays
-            img_data = np.array(img_output)
-
             # add img array and labels as tuples into a list
-            img_list.append((img_data, num))
+            img_list.append(img_output)
+            label_list.append(num)
 
-    return img_list
+    print(img_list, label_list)
+    return (img_list, label_list)
+    raise NotImplementedError
 
 def test_load ():
     img = cv2.imread('gtsrb-small/0/00015_00010.ppm')
@@ -107,9 +104,36 @@ def get_model():
     The output layer should have `NUM_CATEGORIES` units, one for each category.
     """
 
+    model = keras.Sequential ([
+
+        # set 32 filters and a 3*3 kernel
+        tf.keras.layers.Conv2D(
+            32, (3,3), activation = 'relu', input_shape = (IMG_WIDTH, IMG_HEIGHT,3),
+        ),
+
+        # max-pooling using a 2*2 pool size
+        tf.keras.layers.MaxPooling2D(pool_size=(2,2)),
+
+        # Flatten units
+        tf.keras.layers.Flatten(),
+
+        # Add a hidden layer with dropout
+        tf.keras.layers.Dense(128, activation='relu'),
+        tf.keras.layers.Dropout(0.5),
+
+        # Add an output with output units equal to the num of categories
+        keras.layers.Dense(NUM_CATEGORIES, activation = 'softmax')
+    ])
+
+    model.compile(
+        optimizer = 'adam',
+        loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+        metrics = ['accuracy']
+    )
+
+    return model
     raise NotImplementedError
 
 
 if __name__ == "__main__":
     main()
-
