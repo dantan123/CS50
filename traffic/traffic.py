@@ -3,13 +3,14 @@ import numpy as np
 import os
 import sys
 import tensorflow as tf
+import re
 
 from sklearn.model_selection import train_test_split
 
 EPOCHS = 10
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
-NUM_CATEGORIES = 43
+NUM_CATEGORIES = 3
 TEST_SIZE = 0.4
 
 def main():
@@ -18,9 +19,14 @@ def main():
     if len(sys.argv) not in [2, 3]:
         sys.exit("Usage: python traffic.py data_directory [model.h5]")
 
-    # Get image arrays and labels for all image files
-    images, labels = load_data(sys.argv[1])
+    # test_load()
 
+    # Get image arrays and labels for all image files
+    # images, labels = load_data(sys.argv[1])
+    # argv[1] is the directory name
+    load_data(sys.argv[1])
+
+'''
     # Split data into training and testing sets
     labels = tf.keras.utils.to_categorical(labels)
     x_train, x_test, y_train, y_test = train_test_split(
@@ -41,7 +47,8 @@ def main():
         filename = sys.argv[2]
         model.save(filename)
         print(f"Model saved to {filename}.")
-        
+
+'''
 
 def load_data(data_dir):
     """
@@ -61,31 +68,37 @@ def load_data(data_dir):
     path = os.walk(data_dir)
     img_list = []
 
-    for root, directories, files in path:
-
-        for directory in directories:
-            new_path = os.path.abspath(directory)
-
-        for file in files:
-            new_path = os.path.join(new_path, file)
+    for root, dirs, files in path:
+        for fname in files:
+            if re.search('.ppm', fname):
+                new_path = os.path.join(root, fname)
+            else:
+                continue
             print(new_path)
+            num = root.replace('gtsrb-small/', '')
 
-        # load a color image in grayscale
-        img = cv2.imread(new_path, 0)
+            # load a color image and set flag to none
+            new_img = cv2.imread(new_path, 1)
 
-        # resize image
-        img_output = cv2.resize(img, (IMG_WIDTH, IMG_HEIGHT))
+            # resize image
+            img_output = cv2.resize(new_img, (IMG_WIDTH, IMG_HEIGHT))
 
-        # convert to numpy arrays
-        img_data = np.array(img_output)
-        print(img_data.shape)
+            # convert to numpy arrays
+            img_data = np.array(img_output)
 
-         # add img array and labels as tuples into a list
-        img_list.append((img_data, directory))
+            # add img array and labels as tuples into a list
+            img_list.append((img_data, num))
 
     return img_list
 
-    raise NotImplementedError
+def test_load ():
+    img = cv2.imread('gtsrb-small/0/00015_00010.ppm')
+    cv2.imshow('Image', img)
+    while True:
+        exit_key = ord('q')
+        if cv2.waitKey(exit_key):
+            cv2.destroyAllWindows()
+            break
 
 def get_model():
     """
@@ -99,3 +112,4 @@ def get_model():
 
 if __name__ == "__main__":
     main()
+
