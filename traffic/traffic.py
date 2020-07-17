@@ -4,6 +4,7 @@ import os
 import sys
 import tensorflow as tf
 from tensorflow import keras
+from tensorflow.keras import layers
 import re
 
 from sklearn.model_selection import train_test_split
@@ -11,7 +12,7 @@ from sklearn.model_selection import train_test_split
 EPOCHS = 10
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
-NUM_CATEGORIES = 3
+NUM_CATEGORIES = 43
 TEST_SIZE = 0.4
 
 def main():
@@ -71,7 +72,7 @@ def load_data(data_dir):
             else:
                 continue
             # print(new_path)
-            num = root.replace('gtsrb-small/', '')
+            num = root.replace('gtsrb/', '')
 
             # load a color image, setting flag to 1
             new_img = cv2.imread(new_path, 1)
@@ -103,30 +104,32 @@ def get_model():
     The output layer should have `NUM_CATEGORIES` units, one for each category.
     """
 
-    model = keras.Sequential ([
+    model = keras.Sequential()
 
-        # set 32 filters and a 3*3 kernel
-        tf.keras.layers.Conv2D(
-            32, (3,3), activation = 'relu', input_shape = (IMG_WIDTH, IMG_HEIGHT,3),
-        ),
+    model.add(keras.Input(shape = (IMG_WIDTH, IMG_HEIGHT, 3)))
 
-        # max-pooling using a 2*2 pool size
-        tf.keras.layers.MaxPooling2D(pool_size=(2,2)),
+    # apply a convolutional layer and set 32 filters with 3*3 kernel
+    model.add(layers.Conv2D(32, (3,3), activation = 'relu'))
 
-        # Flatten units
-        tf.keras.layers.Flatten(),
+    # max-pooling using a 2*2 pool size to reduce the input
+    model.add(layers.MaxPooling2D(pool_size=(2,2)))
 
-        # Add a hidden layer with dropout
-        tf.keras.layers.Dense(128, activation='relu'),
-        tf.keras.layers.Dropout(0.5),
+    # apply convolution and max-pooling a second time
+    model.add(layers.Conv2D(32, (3,3), activation = 'relu'))
+    model.add(layers.MaxPooling2D(pool_size=(2,2)))
 
-        # Add an output with output units equal to the num of categories
-        keras.layers.Dense(NUM_CATEGORIES, activation = 'softmax')
-    ])
+    # Flatten units
+    model.add(layers.Flatten())
+
+    # Add a hidden layer with dropout
+    model.add(layers.Dense(128, activation='relu'))
+    model.add(layers.Dropout(0.5))
+
+    # Add an output with output units equal to the num of categories
+    model.add(layers.Dense(NUM_CATEGORIES, activation = 'softmax'))
 
     model.compile(
         optimizer = 'adam',
-        #loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
         loss="categorical_crossentropy",
         metrics = ['accuracy']
     )

@@ -4,3 +4,8 @@ This repository is based on Harvard's CS50 - AI (the master branch). All project
 
 ## Traffic
 This is the project where I got to build a CNN and experiment with different TensorFlow options. 
+
+### Key ideas: 
+- image convolution: applying a filter that adds each pixel value of an image
+to its neighbours, weighted according to a kernel matrix
+- max pooling: pooling by choosing the max value in each region
