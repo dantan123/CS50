@@ -6,6 +6,29 @@ This repository is based on Harvard's CS50 - AI (the master branch). All project
 This is the project where I got to build a CNN and experiment with different TensorFlow options. 
 
 ### Key ideas: 
+- multilayer neural network: artificial neural network with an input layer,
+an output layer, and at least one hidden layer
 - image convolution: applying a filter that adds each pixel value of an image
 to its neighbours, weighted according to a kernel matrix
+- pooling: reducing the size of an input by sampling from regions in the input
 - max pooling: pooling by choosing the max value in each region
+- dropout: temporaily removing units - selected at random - from a neural network
+to prevent over-reliance on certain units
+
+### Key Observations:
+One of the key objectives of this project is to investigate the effects of the varying
+the parameters inside a convolutional neural network (CNN). 
+
+In general, it can be observed that increasing the number of convolutional and pooling 
+layers also increases the accuracy of the model. This is achieved by applying the 
+convolutional and pooling twice. The first convolution and pooling allow lower-level
+features to be extracted such as edges, curves, and shapes of the images. The second
+time allow more higher level and complex features to be extracted. 
+
+Increasing the number of filters in the convolutional layer does not affect 
+the overall accuracy of the model for a number of 10 epochs, even though the initial accuracies are low. Increasing the filter number or sizes increases the abstractions
+of the model. It can be reasoned that as the number of layers increase
+and as higher-level features need be extracted, increasing the filter number and sizes can increase the representational power of the layers. 
+
+It can also be observed that increasing the number and sizes of hidden layers neither improve
+nor worsen the accuracy of the model and the neural network. On the other hand, while increasing the size of max pooling reduces the size of input, it comes at a significant drop of accuracy. 
