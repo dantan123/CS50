@@ -23,7 +23,6 @@ def main():
     # Get image arrays and labels for all image files (massage the data)
     images, labels = load_data(sys.argv[1])
 
-'''
     # Split data into training and testing sets
     labels = tf.keras.utils.to_categorical(labels)
     x_train, x_test, y_train, y_test = train_test_split(
@@ -45,7 +44,7 @@ def main():
         model.save(filename)
         print(f"Model saved to {filename}.")
 
-'''
+
 def load_data(data_dir):
     """
     Load image data from directory `data_dir`.
@@ -74,7 +73,7 @@ def load_data(data_dir):
             # print(new_path)
             num = root.replace('gtsrb-small/', '')
 
-            # load a color image and set flag to none
+            # load a color image, setting flag to 1
             new_img = cv2.imread(new_path, 1)
 
             # resize image
@@ -84,7 +83,7 @@ def load_data(data_dir):
             img_list.append(img_output)
             label_list.append(num)
 
-    print(img_list, label_list)
+    #print(img_list, label_list)
     return (img_list, label_list)
     raise NotImplementedError
 
@@ -127,7 +126,8 @@ def get_model():
 
     model.compile(
         optimizer = 'adam',
-        loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+        #loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+        loss="categorical_crossentropy",
         metrics = ['accuracy']
     )
 
