@@ -5,7 +5,7 @@ This repository is based on Harvard's CS50 - AI (the master branch). All project
 ## Traffic
 This is the project where I got to build a CNN and experiment with different TensorFlow options. 
 
-### Key ideas: 
+### Key Ideas: 
 - multilayer neural network: artificial neural network with an input layer,
 an output layer, and at least one hidden layer
 - image convolution: applying a filter that adds each pixel value of an image
