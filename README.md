@@ -27,8 +27,7 @@ time allow more higher level and complex features to be extracted.
 
 Increasing the number of filters in the convolutional layer does not affect 
 the overall accuracy of the model for a number of 10 epochs, even though the initial accuracies are low. Increasing the filter number or sizes increases the abstractions
-of the model. It can be reasoned that as the number of layers increase
-and as higher-level features need be extracted, increasing the filter number and sizes can increase the representational power of the layers. 
+of the model. It can be reasoned that as the number of layers increase and as higher-level features need to be extracted, increasing the filter number and sizes can increase the representational power of the layers. 
 
 It can also be observed that increasing the number and sizes of hidden layers neither improve
 nor worsen the accuracy of the model and the neural network. On the other hand, while increasing the size of max pooling reduces the size of input, it comes at a significant drop of accuracy. 
