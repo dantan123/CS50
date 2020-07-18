@@ -32,5 +32,5 @@ It can also be observed that increasing the number and sizes of hidden layers ne
 nor worsen the accuracy of the model and the neural network. For other models however, this may affect the 
 accuracy. On the other hand, while increasing the size of max pooling reduces the size of input, it comes at a significant drop of accuracy. 
 
-## Random Forest Tutorial
+## Weather: random forest tutorial
 Going to back environmental data, this time I'm using NOAA's weather data to create an emsemble random forest model. The code is mostly based on the tutorial from medium: https://towardsdatascience.com/random-forest-in-python-24d0893d51c0.
