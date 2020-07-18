@@ -16,7 +16,7 @@ to its neighbours, weighted according to a kernel matrix
 to prevent over-reliance on certain units
 
 ### Key Observations:
-One of the key objectives of this project is to investigate the effects of the varying
+One of the key objectives of this project is to investigate the effects of varying
 the parameters inside a convolutional neural network (CNN). 
 
 In general, it can be observed that increasing the number of convolutional and pooling 
