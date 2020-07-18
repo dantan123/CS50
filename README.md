@@ -33,4 +33,4 @@ nor worsen the accuracy of the model and the neural network. For other models ho
 accuracy. On the other hand, while increasing the size of max pooling reduces the size of input, it comes at a significant drop of accuracy. 
 
 ## Weather: random forest tutorial
-Going to back environmental data, this time I'm using NOAA's weather data to create an emsemble random forest model. The code is mostly based on the tutorial from medium: https://towardsdatascience.com/random-forest-in-python-24d0893d51c0.
+Going to back environmental data, this time I'm learning to create an emsemble random forest classifier! The code is based on the tutorial from medium: https://towardsdatascience.com/random-forest-in-python-24d0893d51c0. 
