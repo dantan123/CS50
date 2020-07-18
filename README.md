@@ -31,3 +31,6 @@ the overall accuracy of the model for a number of 10 epochs, even though the ini
 It can also be observed that increasing the number and sizes of hidden layers neither improve
 nor worsen the accuracy of the model and the neural network. For other models however, this may affect the 
 accuracy. On the other hand, while increasing the size of max pooling reduces the size of input, it comes at a significant drop of accuracy. 
+
+## Random Forest Tutorial
+Going to back environmental data, this time I'm using NOAA's weather data to create an emsemble random forest model. The code is mostly based on the tutorial from medium: https://towardsdatascience.com/random-forest-in-python-24d0893d51c0.
