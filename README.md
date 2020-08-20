@@ -2,6 +2,15 @@
 
 This repository is mostly based on Harvard's CS50 - AI (the master branch). All projects are completed by myself with some assistance from the ED forum. For a description of each project, you can visit the CS50-AI website in this link: https://cs50.harvard.edu/ai/2020/. Other branches contain some short assignments from CS50 itself for practice.
 
+
+## PageRank:
+Use Markov Chain and iterative algorithms to calculate page ranks - the importance of pages when searching
+
+### Key Ideas:
+- Markov Chain: a sequence of random variables where the distribution of each variable follows the Markov assumption
+- Markov assumption: a current state depends on only a finite number of previous states
+- Transition model: specify the probability distributions of the next event based on the values of the current event
+
 ## Traffic: image classification
 This is the project where I got to build a CNN for predicting German traffic signs and experiment with TensorFlow and OpenCV.
 
@@ -16,8 +25,7 @@ to its neighbours, weighted according to a kernel matrix
 to prevent over-reliance on certain units
 
 ### Key Observations:
-One of the key objectives of this project is to investigate the effects of varying
-the parameters inside a convolutional neural network (CNN). 
+One of the key objectives of this project is to investigate the effects of tuning hyperparameters inside a convolutional neural network (CNN).
 
 In general, it can be observed that increasing the number of convolutional and pooling 
 layers also increases the accuracy of the model. This is achieved by applying the 
