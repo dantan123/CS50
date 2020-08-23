@@ -14,7 +14,7 @@ Use Markov Chain and iterative algorithms to calculate page ranks - the importan
 ## Heredity:
 Use Bayesian network and inference by enumeration to find the heredity of impairment genes
 
-### Key ideas:
+### Key Ideas:
 - Bayesian network: a directed graph data structure that represents the dependencies of random variables where an
 arrow from one variable (X) to another variable (Y) is the conditional probability of Y based on X. Y is the parent of X.
 - Inference by enumeration: a process of finding the probability distribution of variable X given some observed evidence
