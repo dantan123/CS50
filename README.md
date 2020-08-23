@@ -11,6 +11,16 @@ Use Markov Chain and iterative algorithms to calculate page ranks - the importan
 - Markov assumption: a current state depends on only a finite number of previous states
 - Transition model: specify the probability distributions of the next event based on the values of the current event
 
+## Heredity:
+Use Bayesian network and inference by enumeration to find the heredity of impairment genes
+
+### Key ideas:
+- Bayesian network: a directed graph data structure that represents the dependencies of random variables where an
+arrow from one variable (X) to another variable (Y) is the conditional probability of Y based on X. Y is the parent of X.
+- Inference by enumeration: a process of finding the probability distribution of variable X given some observed evidence
+e and some hiddren variables Y.
+- Joint probability: the liklihood of multiple events all occuring
+
 ## Traffic: image classification
 This is the project where I got to build a CNN for predicting German traffic signs and experiment with TensorFlow and OpenCV.
 
