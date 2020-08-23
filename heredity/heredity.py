@@ -51,9 +51,9 @@ def main():
     has_trait = {"James"}
 
     p = joint_probability(people, one_gene, two_genes, has_trait)
-
+    print(p)
     """
-
+    
     # Keep track of gene and trait probabilities for each person
     probabilities = {
         person: {
@@ -69,12 +69,6 @@ def main():
         }
         for person in people
     }
-
-    """
-    update(probabilities, one_gene, two_genes, has_trait, p)
-    normalize(probabilities)
-    print(probabilities)
-    """
 
     # Loop over all sets of people who might have the trait
     names = set(people)
@@ -97,10 +91,10 @@ def main():
 
                 # Update probabilities with new joint probability
                 p = joint_probability(people, one_gene, two_genes, have_trait)
-                print(p)
                 update(probabilities, one_gene, two_genes, have_trait, p)
-
+                
     # Ensure probabilities sum to 1
+    print(probabilities)
     normalize(probabilities)
 
     # Print results
@@ -111,6 +105,7 @@ def main():
             for value in probabilities[person][field]:
                 p = probabilities[person][field][value]
                 print(f"    {value}: {p:.4f}")
+    
 
 def load_data(filename):
     """
@@ -143,7 +138,6 @@ def powerset(s):
             itertools.combinations(s, r) for r in range(len(s) + 1)
         )
     ]
-
 
 def joint_probability(people, one_gene, two_genes, have_trait):
     """
@@ -179,10 +173,20 @@ def joint_probability(people, one_gene, two_genes, have_trait):
             father_num_gene = assign_num_genes(people[person]["father"], one_gene, two_genes)
             mother_prob = assign_mut_prob(mother_num_gene)
             father_prob = assign_mut_prob(father_num_gene)
-            prob_gene = mother_prob * (1 - father_prob) + father_prob * (1 - mother_prob)
-        
+            if num_gene == 2:
+                # multiply the prob of from mother with the prob of from father
+                # for the case of 2: one mutated gene from mother and one mutated gene from father
+                prob_gene = mother_prob * father_prob
+            elif num_gene == 1:
+                # add together the probabilities of gene coming from mother and not father as well as
+                # from father and not mother
+                prob_gene = mother_prob * (1-father_prob) + (1-mother_prob) * father_prob
+            else:
+                # for the case of 0 gene
+                # multiply the prob not getting the gene from either parent
+                prob_gene = (1-mother_prob) * (1-father_prob)
+
         person_prob = prob_gene * prob_trait
-        #print(person_prob)
         sum_prob *= person_prob
         
     return sum_prob
@@ -199,10 +203,12 @@ def assign_num_genes(person, one_gene, two_genes):
 
 def assign_mut_prob(parent_num_gene):
     if parent_num_gene == 0:
+        # this parent has no gene (1% chance of passing down)
         prob_gene = PROBS["mutation"]
     elif parent_num_gene == 1:
         prob_gene = 0.5
-    else: 
+    else:
+        # this parent has two genes (99% chance of passing down)
         prob_gene = 1 - PROBS["mutation"]
     return prob_gene
 
