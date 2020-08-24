@@ -29,7 +29,7 @@ e and some hiddren variables Y.
 - Linear & nonlinear programming
 - Hill climbing & simulated annealing
 
-* Extra: Lagrange multipliers for solving constraint optimization
+* Bonus review: Lagrange multipliers for solving constraint optimization
 
 ## Traffic: image classification
 This is the project where I got to build a CNN for predicting German traffic signs and experiment with TensorFlow and OpenCV.
