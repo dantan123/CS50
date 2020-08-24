@@ -21,6 +21,14 @@ arrow from one variable (X) to another variable (Y) is the conditional probabili
 e and some hiddren variables Y.
 - Joint probability: the liklihood of multiple events all occuring
 
+## Crossword
+
+### Optimization Concepts:
+- Constraint Satisfaction Problem
+- Hill climbing & simulated annealing
+- Linear & integer programming
+* Extra: Lagrange multipliers
+
 ## Traffic: image classification
 This is the project where I got to build a CNN for predicting German traffic signs and experiment with TensorFlow and OpenCV.
 
