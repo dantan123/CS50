@@ -25,9 +25,11 @@ e and some hiddren variables Y.
 
 ### Optimization Concepts:
 - Constraint Satisfaction Problem
+- Backtracking Search
+- Linear & nonlinear programming
 - Hill climbing & simulated annealing
-- Linear & integer programming
-* Extra: Lagrange multipliers
+
+* Extra: Lagrange multipliers for solving constraint optimization
 
 ## Traffic: image classification
 This is the project where I got to build a CNN for predicting German traffic signs and experiment with TensorFlow and OpenCV.
