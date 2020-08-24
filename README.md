@@ -3,6 +3,16 @@
 This repository is mostly based on Harvard's CS50 - AI (the master branch). All projects are completed by myself with some assistance from the ED forum. For a description of each project, you can visit the CS50-AI website in this link: https://cs50.harvard.edu/ai/2020/. Other branches contain some short assignments from CS50 itself for practice.
 
 
+## Knights
+Use knowledge engineering and inference to solve puzzle games
+
+### Key Ideas:
+- Prepositional logic: knowledge base, entailment
+- Inference rules: Modus Ponens, double negation elimination, implication elimination, biconditional elimination,
+distributive property
+- Resolution: conjunctive normal form (CNF)
+- First order logic
+
 ## PageRank:
 Use Markov Chain and iterative algorithms to calculate page ranks - the importance of pages when searching
 
