@@ -1,7 +1,6 @@
 # AI
 
-This repository is mostly based on Harvard's CS50 - AI (the master branch). All projects are completed by myself with some assistance from the ED forum. For a description of each project, you can visit the CS50-AI website in this link: https://cs50.harvard.edu/ai/2020/. Other branches contain some short assignments from CS50 itself for practice.
-
+AI is this burgeoning and diverse field filled with excitement. Here is a little taste of AI based on Harvard's CS50-AI course.
 
 ## Knights
 Use knowledge engineering and inference to solve puzzle games
