@@ -90,8 +90,8 @@ class CrosswordCreator():
         Enforce node and arc consistency, and then solve the CSP.
         """
         self.enforce_node_consistency()
-        return self.ac3()
-        # return self.backtrack(dict())
+        self.ac3()
+        return self.backtrack(dict())
 
     def enforce_node_consistency(self):
         """
@@ -116,13 +116,27 @@ class CrosswordCreator():
         False if no revision was made.
         """
         revised = False
-        print("x domain is", self.domains[x])
-        print("y domain is", self.domains[y])
-        for val in self.domains[x].copy():
-            if val not in self.domains[y]:
-                print("val not found in y. remove!")
-                self.domains[x].remove(val)
-                revised = True
+        found = False
+        #print("x domain is", self.domains[x])
+        #print("y domain is", self.domains[y])
+        i,j = self.crossword.overlaps[x,y]
+        #print("the overlap square is",i,j)
+
+        for xval in self.domains[x].copy():
+            for yval in self.domains[y]:
+                if xval[i] == yval[j]:
+                    #print("found")
+                    found = True
+                    break
+                else:
+                    continue
+            
+            # keep track of whether a value is found for each xval iteration
+            if found == False:
+                #print("about to remove")
+                self.domains[x].remove(xval)
+            else:
+                found = False
         return revised
         raise NotImplementedError
 
@@ -139,24 +153,22 @@ class CrosswordCreator():
         queue = []
         if arcs == None:
             for i in self.crossword.variables:
-                for j in self.crossword.variables:
-                    if i != j:
-                        queue.append((i,j))
+                for j in self.crossword.neighbors(i):
+                    queue.append((i,j))
         else:
             queue = arcs
-
-        # I think the problem is beginning with a list of all the arcs in the problem (x and y do not form an arc in output)
-
-        # print(queue)
+        
+        #print(queue)
+        
         # while not empty
         while queue:
-            element = queue.pop(0) #FIFO
-            x = element[0]
-            y = element[1]
+            var = queue.pop(0) #FIFO
+            x = var[0]
+            y = var[1]
             if self.revise(x, y): # call revise
                 if len(self.domains[x]) == 0:
                     return False
-                for z in self.crossword.neighbors(self, x):
+                for z in self.crossword.neighbors(x):
                     if z == y:
                         continue
                     else: 
@@ -170,8 +182,14 @@ class CrosswordCreator():
         Return True if `assignment` is complete (i.e., assigns a value to each
         crossword variable); return False otherwise.
         """
+        # check that all variables are in the assignment
+        for var in self.domains:
+            if var not in assignment:
+                return False
+
+        # check that each variable has a corresponding value
         for val in assignment.values():
-            if val == None:
+            if not val:
                 return False
         return True
         raise NotImplementedError
@@ -186,15 +204,18 @@ class CrosswordCreator():
             # check value is the correct length
             if var.length != len(val):
                 return False
+            
             # check val is unique
             if val in all_vals:
                 return False
             all_vals.append(val)
+
             # check no conflicts with neighbors
-            for neighbor in self.crossword.neighbours(var):
-                i, j = self.crossword.overlaps[var, neighbor]
-                if var[i] != neighbor[j]:
-                    return False
+            for neighbor in self.crossword.neighbors(var):
+                if neighbor in assignment:
+                    i, j = self.crossword.overlaps[var, neighbor]
+                    if assignment[var][i] != assignment[neighbor][j]:
+                        return False
         return True
         raise NotImplementedError
 
@@ -205,8 +226,9 @@ class CrosswordCreator():
         The first value in the list, for example, should be the one
         that rules out the fewest values among the neighbors of `var`.
         """
-        neighbors = self.crossword.neighbors(var)
-        return neighbors
+        vals = self.domains[var]
+        print("the list of values is", vals)
+        return vals
 
         """
         ordered_vals = []
@@ -238,15 +260,10 @@ class CrosswordCreator():
         degree. If there is a tie, any of the tied variables are acceptable
         return values.
         """
-        if self.assignment_complete(assignment) == True:
-            raise ValueError("assignment is already complete")
-        else:
-            min_len = 100
-            for var, values in self.domains:
-                if var not in assignment and len(values) < min_len:
-                    min_var = var
-                    min_len = len(values)
-            return min_var
+        # use min # of remaining values
+        for var, values in self.domains.items():
+            if var not in assignment:
+                return var
         raise NotImplementedError
 
     def backtrack(self, assignment):
@@ -259,17 +276,19 @@ class CrosswordCreator():
         If no assignment is possible, return None.
         """
         if self.assignment_complete(assignment):
+            print("the assignment is", assignment)
             return assignment
         var = self.select_unassigned_variable(assignment)
         print("the selected variable is", var)
         for value in self.order_domain_values(var, assignment):
             if self.consistent(assignment): # check if the assignment is consistent
                 assignment[var] = value
-                print(assignment[var])
+                print("the new assignment is", assignment[var])
                 result = self.backtrack(assignment)
                 if result != None:
                     return result
-                assignment[var].remove(value)
+                else:
+                    assignment.pop(var)
         return None
         raise NotImplementedError
 
@@ -288,9 +307,7 @@ def main():
     crossword = Crossword(structure, words)
     creator = CrosswordCreator(crossword)
     assignment = creator.solve()
-    return assignment
 
-    """
     # Print result
     if assignment is None:
         print("No solution.")
@@ -298,7 +315,6 @@ def main():
         creator.print(assignment)
         if output:
             creator.save(assignment, output)
-    """
 
 if __name__ == "__main__":
     main()
