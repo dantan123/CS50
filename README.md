@@ -1,6 +1,7 @@
 # AI
 
-AI is this burgeoning and diverse field filled with excitement. Here is a taste of AI from Harvard's CS50-AI.
+AI is this burgeoning and diverse field filled with excitement. The projects are based on Harvard's CS50-AI. Some
+additional materials are included as well.
 
 ## Knights
 Use knowledge engineering and inference to solve puzzle games
