@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 EPOCHS = 10
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
-NUM_CATEGORIES = 43
+NUM_CATEGORIES = 43 # depends on small dataset or large dataset
 TEST_SIZE = 0.4
 
 def main():
@@ -71,8 +71,7 @@ def load_data(data_dir):
                 new_path = os.path.join(root, fname)
             else:
                 continue
-            # print(new_path)
-            num = root.replace('gtsrb/', '')
+            num = root.replace(data_dir, '')
 
             # load a color image, setting flag to 1
             new_img = cv2.imread(new_path, 1)
@@ -84,7 +83,6 @@ def load_data(data_dir):
             img_list.append(img_output)
             label_list.append(num)
 
-    #print(img_list, label_list)
     return (img_list, label_list)
     raise NotImplementedError
 
@@ -106,23 +104,26 @@ def get_model():
 
     model = keras.Sequential()
 
+    # three channels: rgb
     model.add(keras.Input(shape = (IMG_WIDTH, IMG_HEIGHT, 3)))
 
-    # apply a convolutional layer and set 32 filters with 3*3 kernel
+    # apply convolutional layers and set 32 filters with 3*3 kernel
     model.add(layers.Conv2D(32, (3,3), activation = 'relu'))
 
     # max-pooling using a 2*2 pool size to reduce the input
     model.add(layers.MaxPooling2D(pool_size=(2,2)))
 
-    # apply convolution and max-pooling a second time
+    # apply convolution and max-pooling again
     model.add(layers.Conv2D(32, (3,3), activation = 'relu'))
     model.add(layers.MaxPooling2D(pool_size=(2,2)))
 
     # Flatten units
     model.add(layers.Flatten())
 
-    # Add a hidden layer with dropout
+    # Add a hidden layer
     model.add(layers.Dense(128, activation='relu'))
+
+    # drop out half of the nodes to prevent overfitting
     model.add(layers.Dropout(0.5))
 
     # Add an output with output units equal to the num of categories
