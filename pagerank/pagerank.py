@@ -131,9 +131,13 @@ def iterate_pagerank(corpus, damping_factor):
         for page in update_dict:
             total = 0
 
-            for possible_page in corpus:
-                if page in corpus[possible_page]:
-                    total += update_dict[possible_page] / len(corpus[possible_page])
+            for i in corpus:
+                if page in corpus[i]:
+                    # if the page has links to other pages
+                    total += update_dict[i] / len(corpus[i])
+                if not corpus[i]:
+                    # if the page has no links to other pages (corner)
+                    total += update_dict[i] / len(corpus)
 
             update_dict[page] = (1 - damping_factor) / len(corpus) + damping_factor * total
 
