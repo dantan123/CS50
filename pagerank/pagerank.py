@@ -3,6 +3,7 @@ import random
 import re
 import sys
 import random
+import math
 
 DAMPING = 0.85
 SAMPLES = 10000
@@ -61,8 +62,10 @@ def transition_model(corpus, page, damping_factor):
         if key == page:
             connections = len(value)
             for i in value:
+                # the probability that the page would be linked its connections
                 out_dict[i] = damping_factor/connections
         if key in out_dict.keys():
+            # the probability at random of all pages
             out_dict[key] += (1-damping_factor)/len(corpus)
         else:
             out_dict[key] = (1-damping_factor)/len(corpus)
@@ -89,8 +92,10 @@ def sample_pagerank(corpus, damping_factor, n):
         for key, value in next_page.items():
             all_keys.append(key)
             all_probs.append(value)
+        # return a k-sized list of elements chosen from the population 
+        # with replacement where the weights are specified
         arr = random.choices(all_keys, all_probs, k = 1)
-        selected = arr[0]
+        selected = arr[0] # the first and only element in the array
         if selected in out_dict.keys():
             out_dict[selected] += 1
         else:
@@ -110,25 +115,37 @@ def iterate_pagerank(corpus, damping_factor):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    out_dict = {}
-    total_pages = len(corpus)
-
-    #print("corpus is", corpus)
     
-    for key, value in corpus.items():
-        temp_value = 0
-        while True:
-            if key in out_dict.keys():
-                temp_value = out_dict[key]
-            out_dict[key] = (1-damping_factor)/total_pages
-            for i in value:
-                if i not in out_dict.keys():
-                    out_dict[i] = 1/len(corpus)
-                out_dict[key] += damping_factor*(out_dict[i]/len(value))
-                #print("The key and output are", key, out_dict[key])
-            if temp_value != 0 and abs(temp_value - out_dict[key]) < 0.001:
-                break
-    return out_dict
+    update_dict = {}
+    current_dict = {}
+
+    # initialize each key in corpus
+    for page in corpus:
+        update_dict[page] = 1 / len(corpus)
+
+    while True:
+        current_dict = update_dict.copy()
+        count = 0
+
+        # iterate and update ranks
+        for page in update_dict:
+            total = 0
+
+            for possible_page in corpus:
+                if page in corpus[possible_page]:
+                    total += update_dict[possible_page] / len(corpus[possible_page])
+
+            update_dict[page] = (1 - damping_factor) / len(corpus) + damping_factor * total
+
+            if abs(update_dict[page] - current_dict[page]) < 0.001:
+                count += 1
+
+        if count == len(corpus):
+            break
+        else:
+            continue
+
+    return current_dict
     raise NotImplementedError
 
 if __name__ == "__main__":
