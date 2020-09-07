@@ -336,6 +336,8 @@ class CrosswordCreator():
                     return result
                 else:
                     assignment.pop(var)
+            else:
+                assignment.pop(var)
         return None
 
         raise NotImplementedError
