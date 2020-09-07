@@ -38,7 +38,9 @@ e and some hiddren variables Y.
 - Linear & nonlinear programming
 - Hill climbing & simulated annealing
 
-* Bonus review: Lagrange multipliers for solving constraint optimization
+### Key Ideas:
+- Arc consistency: when all the values in the variable's domain satisfy binary constraints
+- Node consistency: when all the values in the variable's domain satisfy unary constraints
 
 ## Traffic: image classification
 This is the project where I got to build a CNN for predicting German traffic signs and experiment with TensorFlow and OpenCV.
