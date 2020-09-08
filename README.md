@@ -1,6 +1,11 @@
-# AI
+# AI Projects:
+The projects are based on Harvard's CS50-AI.
 
-Most projects are based on Harvard's CS50-AI. Some additional materials are also included.
+## Degrees
+Find the shortest path and the "degree of seperations" between two actors in Hollywood using BFS and DFS
+
+## Tic-Tac-Toe
+Use Minimax to make AI become invincible in this game
 
 ## Knights
 Use knowledge engineering and inference to solve puzzle games
@@ -31,6 +36,7 @@ e and some hiddren variables Y.
 - Joint probability: the liklihood of multiple events all occuring
 
 ## Crossword
+CSP using backtracking searching and heuristcs
 
 ### Optimization Concepts:
 - Constraint Satisfaction Problem
@@ -41,6 +47,9 @@ e and some hiddren variables Y.
 ### Key Ideas:
 - Arc consistency: when all the values in the variable's domain satisfy binary constraints
 - Node consistency: when all the values in the variable's domain satisfy unary constraints
+
+## Shopping
+Use machine learning and kNN to predict whether online shopping customers will complete a purchase
 
 ## Traffic: image classification
 This is the project where I got to build a CNN for predicting German traffic signs and experiment with TensorFlow and OpenCV.
