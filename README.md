@@ -56,20 +56,18 @@ to its neighbours, weighted according to a kernel matrix
 to prevent over-reliance on certain units
 
 ### Key Observations:
-One of the key objectives of this project is to investigate the effects of tuning hyperparameters inside a convolutional neural network (CNN).
+One of the key objectives of this project is tuning the hyperparameters of a convolutional neural network (CNN).
 
 In general, it can be observed that increasing the number of convolutional and pooling 
 layers also increases the accuracy of the model. This is achieved by applying the 
-convolutional and pooling twice. The first convolution and pooling allow lower-level
-features to be extracted such as edges, curves, and shapes of the images. The second
-time allows higher-level and more complex features to be extracted. 
+convolutional and pooling twice. The second time allows higher-level and more complex features to be extracted. 
 
 Increasing the number of filters in the convolutional layer does not affect 
 the overall accuracy of the model for a number of 10 epochs, even though the initial accuracies are low. Increasing the filter number or sizes increase the abstractions of the model. It can be reasoned that as the number of layers increases and as more higher-level features need to be extracted, increasing the filter number and sizes can increase the representational power of the layers. 
 
 It can also be observed that increasing the number and sizes of hidden layers neither improve
 nor worsen the accuracy of the model and the neural network. For other models however, this may affect the 
-accuracy. On the other hand, while increasing the size of max pooling reduces the size of input, it comes at a significant drop of accuracy. 
+accuracy. On the other hand, while increasing the size of max pooling reduces the size of input, it comes at a significant drop of accuracy.
 
 ## Weather: random forest tutorial
 Going to back environmental data, this time I'm learning to create an emsemble random forest classifier! The code is based on the tutorial from medium: https://towardsdatascience.com/random-forest-in-python-24d0893d51c0. 
