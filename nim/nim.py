@@ -102,10 +102,7 @@ class NimAI():
         Return the Q-value for the state `state` and the action `action`.
         If no Q-value exists yet in `self.q`, return 0.
         """
-        for key, value in self.q.items():
-            if key[0] == tuple(state) and key[1] == action:
-                return value
-        return 0
+        return self.q[tuple(state), action] if (tuple(state), action) in self.q else 0
         raise NotImplementedError
 
     def update_q_value(self, state, action, old_q, reward, future_rewards):
@@ -123,8 +120,7 @@ class NimAI():
         `alpha` is the learning rate, and `new value estimate`
         is the sum of the current reward and estimated future rewards.
         """
-        print("update old state and action {state}, {action}", state, action)
-        self.q[(tuple(state), action)] = old_q + self.alpha * (reward + future_rewards - old_q)
+        self.q[tuple(state), action] = old_q + self.alpha * (reward + future_rewards - old_q)
         return
         raise NotImplementedError
 
@@ -138,14 +134,14 @@ class NimAI():
         Q-value in `self.q`. If there are no available actions in
         `state`, return 0.
         """
-        temp_max = 0
-        for key, value in self.q.items():
-            # check state and if action is available
-            if key[0] == tuple(state) and key[1]:
-                if value > temp_max:
-                    temp_max = key[1]
-        print("best future reward is", temp_max)
-        return temp_max # 0 by default if none
+
+        max_q = 0
+
+        for action in Nim.available_actions(list(state)):
+            # find the max by comparing with the previous
+            max_q = max(self.get_q_value(state, action), max_q)
+
+        return max_q
         raise NotImplementedError
 
     def choose_action(self, state, epsilon=True):
@@ -165,25 +161,22 @@ class NimAI():
         """
         # use the available actions
         available_actions = list(Nim.available_actions(state))
-        # print("the available actions are", available_actions)
+
         value = 0
         max_q = 0
 
         # by default, if no q value exists, choose a random action 
         # from the available actions
         best_action = random.choices(available_actions, k=1)[0]
-        print("default best_action is", best_action)
 
         # find the best action
         for action in available_actions:
             value = self.get_q_value(state, action)
             if value > max_q:
                 max_q = value
-                print("new max_q is", max_q)
                 best_action = action
         
         if epsilon == False:
-            print("epsilon is false")
             return best_action
         else:
             # tweak selected action
@@ -191,11 +184,9 @@ class NimAI():
             all_actions.append(best_action)
             weights = []
             for i in range(len(available_actions)-1):
-                #print("i is", i)
                 weights.append(self.epsilon)
             weights.append(1-self.epsilon)
             selected_action = random.choices(population = all_actions, weights = weights, k=1)[0]
-            # print("selected action is", selected_action)
             return selected_action # return the first element of the list
         raise NotImplementedError
 
@@ -223,9 +214,7 @@ def train(n):
 
             # Keep track of current state and action
             state = game.piles.copy()
-            print("old state is:", state)
             action = player.choose_action(game.piles)
-            print("old action is:", action)
 
             # Keep track of last state and action
             last[game.player]["state"] = state
@@ -234,14 +223,13 @@ def train(n):
             # Make move
             game.move(action)
             new_state = game.piles.copy()
-            print("new state is", new_state)
 
             # When game is over, update Q values with rewards
             if game.winner is not None:
                 player.update(state, action, new_state, -1)
                 player.update(
-                    last[game.player]["state"], #old state
-                    last[game.player]["action"], #old action
+                    last[game.player]["state"], # old state
+                    last[game.player]["action"], # old action
                     new_state,
                     1
                 )
