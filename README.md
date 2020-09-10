@@ -55,6 +55,9 @@ CSP using backtracking searching and heuristcs
 ## Shopping
 Use machine learning and kNN to predict whether online shopping customers will complete a purchase
 
+## Nim
+Use reinforcement learning (Q-learning) for AI to train itself in the game of nim
+
 ## Traffic: image classification
 This is the project where I got to build a CNN for predicting German traffic signs and experiment with TensorFlow and OpenCV.
 
