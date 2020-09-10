@@ -4,6 +4,10 @@ The projects are based on Harvard's CS50-AI. All projects are completed by mysel
 ## Degrees
 Find the shortest path and the "degree of seperations" between two actors in Hollywood using BFS and DFS
 
+## Key Ideas:
+- BFS: FIFO or queue frontier
+- DFS: LIFO or stack frontier
+
 ## Tic-Tac-Toe
 Use Minimax to make AI become invincible in this game
 
