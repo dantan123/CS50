@@ -216,7 +216,7 @@ class CrosswordCreator():
                 return False
             all_vals.append(val)
 
-            # check no conflicts with neighbors (something prolly wrong here)
+            # check no conflicts with neighbors
             for neighbor in self.crossword.neighbors(var):
                 if neighbor in assignment:
                     i, j = self.crossword.overlaps[var, neighbor]
