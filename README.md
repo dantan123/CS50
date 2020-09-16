@@ -1,5 +1,4 @@
-# AI Algorithms:
-The projects are based on Harvard's CS50-AI. All projects are completed by myself.
+# AI Projects & Algorithms:
 
 ## Degrees
 Find the shortest path and the "degree of seperations" between two actors in Hollywood using BFS and DFS
