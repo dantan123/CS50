@@ -78,7 +78,6 @@ def preprocess(sentence):
             continue
         else:
             word_list.remove(word)
-    print(word_list)
     return word_list
     raise NotImplementedError
 
@@ -90,7 +89,6 @@ def np_chunk(tree):
     noun phrases as subtrees.
     """
     # note the difference between extend() vs append()
-    print(tree)
     noun_list = list()
 
     for subtree in tree.subtrees():
@@ -100,7 +98,6 @@ def np_chunk(tree):
         # only append when the label is down to 'N'
         if subtree.label() == 'N':
             noun_list.append(subtree)
-    # print(noun_list)
     return noun_list
     raise NotImplementedError
 

@@ -43,16 +43,6 @@ def main():
     if len(sys.argv) != 2:
         sys.exit("Usage: python heredity.py data.csv")
     people = load_data(sys.argv[1])
-    print(people)
-
-    """
-    one_gene = {"Harry"}
-    two_genes = {"James"}
-    has_trait = {"James"}
-
-    p = joint_probability(people, one_gene, two_genes, has_trait)
-    print(p)
-    """
     
     # Keep track of gene and trait probabilities for each person
     probabilities = {
@@ -94,7 +84,7 @@ def main():
                 update(probabilities, one_gene, two_genes, have_trait, p)
                 
     # Ensure probabilities sum to 1
-    print(probabilities)
+    # print(probabilities)
     normalize(probabilities)
 
     # Print results
