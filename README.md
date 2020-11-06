@@ -3,7 +3,7 @@
 ## Degrees
 Find the shortest path and the "degree of seperations" between two actors in Hollywood using BFS and DFS
 
-## Key Ideas:
+### Key Ideas:
 - BFS: FIFO or queue frontier
 - DFS: LIFO or stack frontier
 
