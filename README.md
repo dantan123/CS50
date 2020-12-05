@@ -20,7 +20,7 @@ Use Minimax to make AI play the game optimally
 - Path Cost: a numerical cost associated with a given path
 
 ## Knights
-Use model checking algorithm to solve the classic puzzle game: knight and knave
+Use model checking algorithm to solve the classic puzzle game: knights and knaves
 
 ### Key Ideas:
 - Prepositional logic: knowledge base, entailment
