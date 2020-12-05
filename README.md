@@ -1,17 +1,26 @@
 # AI Projects & Algorithms:
 
 ## Degrees
-Find the shortest path and the "degree of seperations" between two actors in Hollywood using BFS and DFS
+Find the shortest path and the "degree of seperations" between two actors using BFS and DFS
 
-## Key Ideas:
+### Key Ideas:
 - BFS: FIFO or queue frontier
 - DFS: LIFO or stack frontier
 
 ## Tic-Tac-Toe
-Use Minimax to make AI become invincible in this game
+Use Minimax to make AI play the game optimally
+
+### Key Ideas:
+- Adveserial search: algorithm where the opponent has an opposing goal
+- State: a configuration of an agent in its environment
+- Actions: choices that can be made in a state
+- Transition Model: state results based on a particular action
+- State Space: set of all states possible from the initial state following a sequence of actions
+- Goal Test: condition that determines whether a goal is reached
+- Path Cost: a numerical cost associated with a given path
 
 ## Knights
-Use knowledge engineering and inference to solve puzzle games
+Use model checking algorithm to solve the classic puzzle game: knights and knaves
 
 ### Key Ideas:
 - Prepositional logic: knowledge base, entailment
