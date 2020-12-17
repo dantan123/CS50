@@ -8,7 +8,6 @@ import math
 DAMPING = 0.85
 SAMPLES = 10000
 
-
 def main():
     if len(sys.argv) != 2:
         sys.exit("Usage: python pagerank.py corpus")
@@ -56,21 +55,22 @@ def transition_model(corpus, page, damping_factor):
     linked to by `page`. With probability `1 - damping_factor`, choose
     a link at random chosen from all pages in the corpus.
     """
-    out_dict = {}
+    distribution = {}
+
     # need to iterate through a python dictionary
-    for key, value in corpus.items():
-        if key == page:
-            connections = len(value)
-            for i in value:
+    for corpus_page, corpus_links in corpus.items():
+        if corpus_page == page:
+            number_links = len(corpus_links) # the current page's link
+            for corpus_link in corpus_links:
                 # the probability that the page would be linked its connections
-                out_dict[i] = damping_factor/connections
-        if key in out_dict.keys():
+                distribution[corpus_link] = damping_factor / number_links
+        if corpus_page in distribution.keys():
             # the probability at random of all pages
-            out_dict[key] += (1-damping_factor)/len(corpus)
+            distribution[corpus_page] += (1 - damping_factor) / len(corpus)
         else:
-            out_dict[key] = (1-damping_factor)/len(corpus)
-    return out_dict
-    raise NotImplementedError
+            distribution[corpus_page] = (1 - damping_factor) / len(corpus)
+    
+    return distribution
 
 def sample_pagerank(corpus, damping_factor, n):
     """
@@ -81,30 +81,35 @@ def sample_pagerank(corpus, damping_factor, n):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    out_dict = {}
+    page_ranks = {}
+
+    # first sample is selected at random
     first_page = random.choice(list(corpus.keys()))
-    #print("first page is:", first_page)
+
+    # find the distribution of next page
     next_page = transition_model(corpus, first_page, damping_factor)
-    #print("next page is:", next_page)
-    for i in range(n):
-        all_keys = []
-        all_probs = []
-        for key, value in next_page.items():
-            all_keys.append(key)
-            all_probs.append(value)
+
+    for _ in range(n):
+        pages = []
+        probabilities = []
+        for page, probability in next_page.items():
+            pages.append(page)
+            probabilities.append(probability)
+    
         # return a k-sized list of elements chosen from the population 
         # with replacement where the weights are specified
-        arr = random.choices(all_keys, all_probs, k = 1)
-        selected = arr[0] # the first and only element in the array
-        if selected in out_dict.keys():
-            out_dict[selected] += 1
+        selected = random.choices(pages, probabilities, k = 1)[0]
+        if selected in page_ranks.keys():
+            page_ranks[selected] += 1
         else:
-            out_dict[selected] = 1
+            page_ranks[selected] = 1
+
+        # the next sample's distribution is generated from the selected sample
         next_page = transition_model(corpus, selected, damping_factor)
-    for key, value in out_dict.items():
-        out_dict[key] = value / n
-    return out_dict
-    raise NotImplementedError
+    
+    for page, rank in page_ranks.items():
+        page_ranks[page] = rank / n
+    return page_ranks
 
 def iterate_pagerank(corpus, damping_factor):
     """
@@ -115,42 +120,33 @@ def iterate_pagerank(corpus, damping_factor):
     their estimated PageRank value (a value between 0 and 1). All
     PageRank values should sum to 1.
     """
-    
-    update_dict = {}
-    current_dict = {}
+    # initialize dictionaries
+    updated_ranks = {}
+    current_ranks = {}
 
     # initialize each key in corpus
     for page in corpus:
-        update_dict[page] = 1 / len(corpus)
+        updated_ranks[page] = 1 / len(corpus)
 
     while True:
-        current_dict = update_dict.copy()
-        count = 0
+        current_ranks = updated_ranks.copy()
+        page_count = 0
 
-        # iterate and update ranks
-        for page in update_dict:
-            total = 0
+        # update each page in the updated_ranks
+        for page in updated_ranks:
+            summation = 0
+            for corpus_page, corpus_links in corpus.items():
+                if page in corpus_links:
+                    # the probability of going page i (link) to page p
+                    summation += updated_ranks[corpus_page] / len(corpus_links)
 
-            for i in corpus:
-                if page in corpus[i]:
-                    # if the page has links to other pages
-                    total += update_dict[i] / len(corpus[i])
-                if not corpus[i]:
-                    # if the page has no links to other pages (corner)
-                    total += update_dict[i] / len(corpus)
+            updated_ranks[page] = (1 - damping_factor) / len(corpus) + damping_factor * summation
 
-            update_dict[page] = (1 - damping_factor) / len(corpus) + damping_factor * total
+            if abs(updated_ranks[page] - current_ranks[page]) < 0.001:
+                page_count += 1
 
-            if abs(update_dict[page] - current_dict[page]) < 0.001:
-                count += 1
-
-        if count == len(corpus):
-            break
-        else:
-            continue
-
-    return current_dict
-    raise NotImplementedError
+        if page_count == len(corpus):
+            return updated_ranks
 
 if __name__ == "__main__":
     main()
